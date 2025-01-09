@@ -18,12 +18,21 @@ jobs:
 
     - name: Build Docker image
       run: |
-        export IMAGE_TAG="nextselfbuild:2.18.5.$(date +%Y%m%d%H%M)"
+        export IMAGE_TAG="nextselfbuild:2.18.5"
         docker build -t $IMAGE_TAG .
+    
+    - name: Check if file already exists
+      run: |
+        if [ -f "nextselfbuild.tar.gz" ]; then
+          echo "nextselfbuild.tar.gz already exists, deleting it..."
+          rm nextselfbuild.tar.gz
+        else
+          echo "No existing nextselfbuild.tar.gz found."
+        fi
 
     - name: Save Docker image to a tar file
       run: |
-        export IMAGE_TAG="nextselfbuild:2.18.5.$(date +%Y%m%d%H%M)"
+        export IMAGE_TAG="nextselfbuild:2.18.5"
         docker save $IMAGE_TAG | gzip > nextselfbuild.tar.gz
 
     - name: Upload to Tencent Cloud COS
