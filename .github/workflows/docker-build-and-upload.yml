@@ -54,11 +54,11 @@ jobs:
 
           # 上传文件到 COS
           with open('nextselfbuild.tar.gz', 'rb') as fp:
-            response = client.put_object(
+              response = client.put_object(
               Bucket=os.getenv('COS_BUCKET_NAME'),
               Body=fp,
               Key='nextselfbuild.tar.gz',
               StorageClass='STANDARD',
               EnableMD5=False
-            )
-            print(response['ETag'])
+              )
+              print(response['ETag'])
