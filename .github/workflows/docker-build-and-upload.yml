@@ -29,4 +29,4 @@ jobs:
         COS_SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
       run: |
         pip install -U cos-python-sdk-v5
-        python upload_to_cos.py
+        python upload2cos.py
