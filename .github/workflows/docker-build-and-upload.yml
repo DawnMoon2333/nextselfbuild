@@ -34,11 +34,6 @@ jobs:
           from qcloud_cos import CosS3Client
           import sys
           import os
-          import logging
-
-          logging.basicConfig(level=logging.INFO, stream=sys.stdout)
-
-          '''
 
           # 初始化配置信息
           config = CosConfig(
@@ -59,5 +54,3 @@ jobs:
               EnableMD5=False
               )
               print(response['ETag'])
-
-          '''
