@@ -16,10 +16,15 @@ jobs:
     - name: Set up Docker
       uses: docker/setup-buildx-action@v1
 
-    - name: Create an empty tar file
+    - name: Build Docker image
       run: |
-        # 创建一个空的 tar.gz 文件
-        touch nextselfbuild.tar.gz
+        export IMAGE_TAG="nextselfbuild:2.18.5.$(date +%Y%m%d%H%M)"
+        docker build -t $IMAGE_TAG .
+
+    - name: Save Docker image to a tar file
+      run: |
+        export IMAGE_TAG="nextselfbuild:2.18.5.$(date +%Y%m%d%H%M)"
+        docker save $IMAGE_TAG | gzip > nextselfbuild.tar.gz
 
     - name: Upload to Tencent Cloud COS
       env:
