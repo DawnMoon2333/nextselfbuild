@@ -34,6 +34,8 @@ jobs:
       run: |
         export IMAGE_TAG="nextselfbuild:2.18.5"
         docker save $IMAGE_TAG | gzip > nextselfbuild.tar.gz
+        echo "File size of nextselfbuild.tar.gz:"
+        ls -lh nextselfbuild.tar.gz
 
     - name: Upload to Tencent Cloud COS
       env:
