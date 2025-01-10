@@ -9,6 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      IMAGE_TAG: "nextselfbuild:2.18.5"
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -18,9 +21,8 @@ jobs:
 
     - name: Build Docker image
       run: |
-        export IMAGE_TAG="nextselfbuild:2.18.5"
         docker build -t $IMAGE_TAG .
-    
+
     - name: Check if file already exists
       run: |
         if [ -f "nextselfbuild.tar.gz" ]; then
@@ -32,17 +34,17 @@ jobs:
 
     - name: Save Docker image to a tar file
       run: |
-        export IMAGE_TAG="nextselfbuild:2.18.5"
         docker save $IMAGE_TAG | gzip > nextselfbuild.tar.gz
         echo "File size of nextselfbuild.tar.gz:"
         ls -lh nextselfbuild.tar.gz
 
-    - name: Upload to Tencent Cloud COS
-      env:
-        COS_BUCKET_NAME: ${{ secrets.COS_BUCKET_NAME }}
-        COS_REGION: ${{ secrets.COS_REGION }}
-        COS_SECRET_ID: ${{ secrets.COS_SECRET_ID }}
-        COS_SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Push Docker image to Docker Hub
       run: |
-        pip install -U cos-python-sdk-v5
-        python upload2cos.py
+        docker tag $IMAGE_TAG ${{ secrets.DOCKER_USERNAME }}/$IMAGE_TAG
+        docker push ${{ secrets.DOCKER_USERNAME }}/$IMAGE_TAG
