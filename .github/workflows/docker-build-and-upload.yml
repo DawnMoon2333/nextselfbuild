@@ -46,5 +46,5 @@ jobs:
 
     - name: Push Docker image to Docker Hub
       run: |
-        docker tag $IMAGE_TAG ${{ secrets.DOCKER_USERNAME }}/$IMAGE_TAG
-        docker push ${{ secrets.DOCKER_USERNAME }}/$IMAGE_TAG
+        docker tag $IMAGE_TAG ${{ secrets.DOCKER_USERNAME }}/nextselfbuild
+        docker push ${{ secrets.DOCKER_USERNAME }}/nextselfbuild
