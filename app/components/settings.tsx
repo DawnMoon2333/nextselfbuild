@@ -692,6 +692,35 @@ export function Settings() {
     </ListItem>
   );
 
+  // 这里是next自己的推广
+
+  //备份：
+  // const saasStartComponent = (
+  //   <ListItem
+  //     className={styles["subtitle-button"]}
+  //     title={
+  //       Locale.Settings.Access.SaasStart.Title +
+  //       `${Locale.Settings.Access.SaasStart.Label}`
+  //     }
+  //     subTitle={Locale.Settings.Access.SaasStart.SubTitle}
+  //   >
+  //     <IconButton
+  //       aria={
+  //         Locale.Settings.Access.SaasStart.Title +
+  //         Locale.Settings.Access.SaasStart.ChatNow
+  //       }
+  //       icon={<FireIcon />}
+  //       type={"primary"}
+  //       text={Locale.Settings.Access.SaasStart.ChatNow}
+  //       onClick={() => {
+  //         trackSettingsPageGuideToCPaymentClick();
+  //         window.location.href = SAAS_CHAT_URL;
+  //       }}
+  //     />
+  //   </ListItem>
+  // );
+
+
   const saasStartComponent = (
     <ListItem
       className={styles["subtitle-button"]}
@@ -1857,7 +1886,7 @@ export function Settings() {
             }}
           />
         </List>
-        <List>
+        {/* <List>
           <TTSConfigList
             ttsConfig={config.ttsConfig}
             updateConfig={(updater) => {
@@ -1866,7 +1895,7 @@ export function Settings() {
               config.update((config) => (config.ttsConfig = ttsConfig));
             }}
           />
-        </List>
+        </List> */}
 
         <DangerItems />
       </div>
