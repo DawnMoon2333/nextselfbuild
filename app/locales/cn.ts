@@ -309,10 +309,10 @@ const cn = {
 
     Access: {
       SaasStart: {
-        Title: "回到fxgpt中转站",
-        Label: "点击左侧令牌-右侧聊天一键填写url和secret",
+        Title: "回到fxgpt官网",
+        Label: "（点击左侧令牌-右侧聊天一键聊天）",
         SubTitle:
-          "由 fxgpt 官方维护, 开箱即用，自动填写令牌信息，支持 OpenAI o1, GPT-4o, Claude-3.5 等最新大模型",
+          "由 fxgpt 官方维护, 开箱即用，自动填写令牌信息，支持 o1，claude 3.5 sonnet，flux 等大模型",
         ChatNow: "打开fxgpt官网",
       },
       AccessCode: {

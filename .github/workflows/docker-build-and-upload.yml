@@ -1,0 +1,50 @@
+name: Build and Upload Docker Image
+
+on:
+  push:
+    branches:
+      - main  # 更改为你的默认分支
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_TAG: "nextselfbuild:2.18.5"
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker
+      uses: docker/setup-buildx-action@v1
+
+    - name: Build Docker image
+      run: |
+        docker build -t $IMAGE_TAG .
+
+    - name: Check if file already exists
+      run: |
+        if [ -f "nextselfbuild.tar.gz" ]; then
+          echo "nextselfbuild.tar.gz already exists, deleting it..."
+          rm nextselfbuild.tar.gz
+        else
+          echo "No existing nextselfbuild.tar.gz found."
+        fi
+
+    - name: Save Docker image to a tar file
+      run: |
+        docker save $IMAGE_TAG | gzip > nextselfbuild.tar.gz
+        echo "File size of nextselfbuild.tar.gz:"
+        ls -lh nextselfbuild.tar.gz
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Push Docker image to Docker Hub
+      run: |
+        docker tag $IMAGE_TAG ${{ secrets.DOCKER_USERNAME }}/nextselfbuild
+        docker push ${{ secrets.DOCKER_USERNAME }}/nextselfbuild
